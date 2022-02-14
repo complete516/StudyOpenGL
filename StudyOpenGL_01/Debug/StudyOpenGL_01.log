@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  glad.c
+  main.cpp
+  LINK : 没有找到 E:\StartProject\MyStudy\StudyOpenGL\Debug\StudyOpenGL_01.exe 或上一个增量链接没有生成它；正在执行完全链接
   StudyOpenGL_01.vcxproj -> E:\StartProject\MyStudy\StudyOpenGL\Debug\StudyOpenGL_01.exe

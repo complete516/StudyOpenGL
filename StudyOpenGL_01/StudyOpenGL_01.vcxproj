@@ -73,8 +73,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\StartProject\MyStudy\StudyOpenGL\OpenGL\Libraries\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\StartProject\MyStudy\StudyOpenGL\OpenGL\lib-vc2019;$(LibraryPath)</LibraryPath>
+    <IncludePath>../OpenGL\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\OpenGL\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
