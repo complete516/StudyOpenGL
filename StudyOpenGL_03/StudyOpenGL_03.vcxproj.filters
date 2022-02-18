@@ -15,16 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyShader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MyShader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\MyShader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FrgamentShader.fs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="VertexShader.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="MoveVertexShader.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="VertexToFragmentVertexShader.vs">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\MyShader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

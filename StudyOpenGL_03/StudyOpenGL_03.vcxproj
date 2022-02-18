@@ -143,11 +143,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="MyShader.h" />
+    <ClCompile Include="..\Common\MyShader.cpp" />
+    <ClCompile Include="..\glad.c" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\glad.c" />
-    <ClCompile Include="MyShader.cpp" />
+    <None Include="FrgamentShader.fs" />
+    <None Include="MoveVertexShader.vs" />
+    <None Include="VertexShader.vs" />
+    <None Include="VertexToFragmentVertexShader.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Common\MyShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
