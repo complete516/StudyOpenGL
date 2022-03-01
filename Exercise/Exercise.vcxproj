@@ -142,16 +142,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\MyShader.cpp" />
     <ClCompile Include="..\glad.c" />
     <ClCompile Include="BaseExercise.cpp" />
     <ClCompile Include="exercise_01.cpp" />
     <ClCompile Include="exercise_02.cpp" />
+    <ClCompile Include="exercise_04.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\MyShader.h" />
+    <ClInclude Include="..\Common\stb_image.h" />
     <ClInclude Include="BaseExercise.h" />
     <ClInclude Include="exercise_01.h" />
     <ClInclude Include="exercise_02.h" />
+    <ClInclude Include="exercise_04.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
