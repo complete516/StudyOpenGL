@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\MyShader.h" />
+    <ClInclude Include="..\Common\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="transformFragmentShader.fs" />

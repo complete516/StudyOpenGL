@@ -29,6 +29,9 @@
     <ClInclude Include="..\Common\MyShader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\Common\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="transformFragmentShader.fs">
