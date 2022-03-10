@@ -56,7 +56,7 @@ int main()
 		return -1;
 	}
 
-	unsigned int VAO, VBO, EBO, texture;
+	unsigned int VAO, VBO, EBO;
 	glGenBuffers(1, &VBO);
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &EBO);
@@ -77,8 +77,9 @@ int main()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(sizeof(float) * 6));
 	glEnableVertexAttribArray(2);
 
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	unsigned int texture1, texture2;
+	glGenTextures(1, &texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -86,23 +87,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	MyShader shaderProgram("./transformVertexShader.vs", "./transformFragmentShader.fs");
-
 	glm::vec4 vec(1.0, 0.0, 0.0, 1.0);
-	// glm::mat4 trans(1.0);
-	// trans = glm::translate(trans, glm::vec3(-0.5, 0.2, 0.0));
-	// trans =  glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0,0.0,1.0));
-	// trans = glm::scale(trans,glm::vec3(0.5,1.0f,1.0f));
-	// 4x4 4x1   4x1
-	//[					[
-	// 1,0,0,0			1
-	// 0,1,0,0    x  	1
-	// 0,0,1,0			1
-	// 0,0,0,1			1
-	// ]				]
-
-	// vec = trans * vec;
-	// std::cout << vec.x << vec.y << vec.z << std::endl;
 
 	int textureWidth, textureHeight, channels;
 	unsigned char *data;
@@ -118,7 +103,24 @@ int main()
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
 
-	shaderProgram.SetInt("texture1", texture);
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	data = stbi_load("../res/awesomeface.png", &textureWidth, &textureHeight, &channels, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textureWidth, textureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(data);
+
+	MyShader shaderProgram("./transformVertexShader.vs", "./transformFragmentShader.fs");
+	shaderProgram.use();
+	shaderProgram.SetInt("texture1", 0);
+	shaderProgram.SetInt("texture2", 1);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -128,18 +130,29 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		// glm::mat4 trans(1.0);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
+		glm::mat4 trans(1.0);
 		// trans = glm::translate(trans, glm::vec3(0.5, -0.5, 0.0));
 		// trans = glm::rotate(trans, float(glfwGetTime()), glm::vec3(0.0, 0.0, 1.0));
 
 		// std::cout << glfwGetTime() << std::endl;
 		shaderProgram.use();
-		// glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		// glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		shaderProgram.use();
+		trans = glm::translate(trans,glm::vec3(-0.5f,0.5f,0.0f));
+		float s = sin(glfwGetTime());
+		trans = glm::scale(trans,glm::vec3(s,s,s));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram.ID, "transform"), 1, GL_FALSE, glm::value_ptr(trans));
+
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
