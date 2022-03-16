@@ -51,48 +51,7 @@ unsigned int indices[] = {
 int main()
 {
 
-	 int arr1 [] = {
-		1,2,3,4,
-		0,2,1,8,
-		4,0,3,0,
-		2,8,0,5,
-	};
-
-	int arr2[] = {
-		2,2,9,4,
-		0,2,3,7,
-		3,0,1,0,
-		9,8,0,9,
-	};
-
-//[2+9+36]=47
-	for(int i = 0;i<4;i++) {
-		int a1 = 0;
-		for(int j = 0;j<4;j++){
-			for(int k = 0;k<4;k++){
-			 a1 += arr1[i*4+k] * arr2[j+k*4];		
-			}
-			std::cout<<a1<<" ";
-		}
-		std::cout<<std::endl;
-		
-	}
-
-	
-	glm::mat4 m1 = glm::make_mat4(arr1);
-
-	glm::mat4 m2 = glm::make_mat4(arr2);
-
-	std::cout<<"------------------"<<std::endl;
-	glm::mat4 m3 = m1*m2;
-
-	for(int i = 0;i<4;i++){
-		for(int j = 0;j<4;j++){
-			std::cout<<m3[i][j]<<" ";
-		}
-		std::cout<<std::endl;
-	}
-
+//  
 
 
 	glfwInit();
@@ -151,6 +110,7 @@ int main()
 	unsigned char *data;
 	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load("../res/container.jpg", &textureWidth, &textureHeight, &channels, 0);
+	
 	if (data == NULL)
 	{
 		std::cout << "failed load Texture" << std::endl;

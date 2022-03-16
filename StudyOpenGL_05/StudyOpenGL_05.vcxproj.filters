@@ -32,6 +32,9 @@
     <ClInclude Include="..\Common\stb_image.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="transformFragmentShader.fs">
@@ -40,5 +43,16 @@
     <None Include="transformVertexShader.vs">
       <Filter>资源文件</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\awesomeface.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\res\container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="..\res\wall.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>
