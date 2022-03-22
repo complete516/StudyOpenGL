@@ -141,6 +141,9 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
+
+        prossInput(window);
+
         glClearColor(0.2f, 0.3f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -158,10 +161,10 @@ int main()
 
         float radius = 10.0f;
 
-        float camX = sin(glfwGetTime()) * radius;
-        float camZ = cos(glfwGetTime()) * radius;
+        // float camX = sin(glfwGetTime()) * radius;
+        // float camZ = cos(glfwGetTime()) * radius;
 
-        view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), pos - glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0f, 0.0f));
+        view = glm::lookAt(glm::vec3(0.0, 0.0f, 3.0f), pos - glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0, 1.0f, 0.0f));
 
         //透视
         glm::mat4 projection;
@@ -199,16 +202,18 @@ void prossInput(GLFWwindow *window)
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
-    
+     
     }
     else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
     {
-    
+      
     }
     else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
+       
     }
     else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
+        
     }
 }
