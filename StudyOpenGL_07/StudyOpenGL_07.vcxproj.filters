@@ -27,6 +27,9 @@
     <ClCompile Include="..\glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Common\MyCamera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\MyVertexBuffer.h">
@@ -36,6 +39,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\Common\stb_image.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\MyCamera.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
