@@ -94,6 +94,12 @@ void MyShader::SetVec3(const std::string& name, float v0, float v1, float v2) co
 	glUniform3f(glGetUniformLocation(ID, name.c_str()), v0, v1, v2);
 }
 
+void MyShader::SetVec3(const std::string & name ,glm::vec3 & v3){
+	glUniform3f(glGetUniformLocation(ID,name.c_str()),v3.x,v3.y,v3.z);
+
+}
+
+
 MyShader::~MyShader() {
 	glDeleteProgram(ID);
 }
