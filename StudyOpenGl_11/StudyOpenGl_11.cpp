@@ -206,8 +206,8 @@ int main()
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, specularMap);
 
-         glActiveTexture(GL_TEXTURE2);
-         glBindTexture(GL_TEXTURE_2D, matrixMap);
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, matrixMap);
 
         glBindVertexArray(cubleVAO);
         glDrawArrays(GL_TRIANGLES,0,36);

@@ -177,8 +177,8 @@ int main()
     while (! glfwWindowShouldClose(window))
     {
 
-        camera.Position.x = sin(glfwGetTime())*10;
-        camera.Position.z = cos(glfwGetTime())*10;
+        //camera.Position.x = sin(glfwGetTime())*10;
+        //camera.Position.z = cos(glfwGetTime())*10;
         
     
 
@@ -203,14 +203,12 @@ int main()
 
         boxShader.SetVec3("viewPos",camera.Position);
 
-
         boxShader.SetVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
         boxShader.SetVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
         boxShader.SetVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
         boxShader.SetVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
 
-
-                // point light 1
+        // point light 1
         boxShader.SetVec3("pointLights[0].position", pointLightPositions[0]);
         boxShader.SetVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
         boxShader.SetVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
