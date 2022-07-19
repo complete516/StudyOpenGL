@@ -143,7 +143,7 @@ int main()
         glBindTexture(GL_TEXTURE_2D, panelMap);
         glBindVertexArray(panelMap);
 
-        panelShader.SetMat4("project", projection);
+        panelShader.SetMat4("projection", projection);
         panelShader.SetMat4("view", view);
         model = glm::mat4(1.0f);
         panelShader.SetMat4("model", model);
