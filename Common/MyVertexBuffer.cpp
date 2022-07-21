@@ -36,8 +36,8 @@ void MyVertexBuffer::CreateBindEBO(int size, const void *indices)
 
 void MyVertexBuffer::VertexAttribPointer(int index, int size, int stride, int offset)
 {
-    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, (void *)(sizeof(float) * offset));
     glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride, (void *)(sizeof(float) * offset));
 }
 
 void MyVertexBuffer::BindVertexArray()

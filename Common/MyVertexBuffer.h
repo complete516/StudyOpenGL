@@ -1,5 +1,5 @@
 #ifndef VERTEXT_BUFFER_H
-#define VERTEXT_BUFFER_H 1
+#define VERTEXT_BUFFER_H 
 #include<iostream>
 #include<vector>
 

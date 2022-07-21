@@ -132,27 +132,30 @@ int main()
     }
     stbi_set_flip_vertically_on_load(false);
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NOTEQUAL,1,0xff);
+    glStencilOp(GL_KEEP,GL_KEEP,GL_REPLACE);
 
     unsigned int boxVAO,VBO;
     glGenVertexArrays(1,&boxVAO);
     glGenBuffers(1,&VBO);
 
+    glBindVertexArray(boxVAO);
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
     glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),vertices,GL_STATIC_DRAW);
 
-
-    glBindVertexArray(boxVAO);
     //vertex
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(0));
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(0));
     
     //normal
-    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(3*sizeof(float)));
     glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(3*sizeof(float)));
 
     //texture Coords
-    glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(6*sizeof(float)));
     glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE,8*sizeof(float),(void*)(6*sizeof(float)));
 
     unsigned int lightCubeVAO ;
     glGenVertexArrays(1,&lightCubeVAO);
@@ -169,6 +172,7 @@ int main()
     MyShader boxShader("./Res/LightCasterVS.vs","./Res/LightCasterFS.fs");
     MyShader lightShader("./Res/lightVS.vs","./Res/lightFS.fs");
     MyShader modelShader("./Res/ModelVS.vs","./Res/ModelFS.fs");
+    MyShader singleColorShader("./Res/StencilShader.vs","./Res/StencilShader.fs");
     
     unsigned int diffuseMap =   loadTexture("../res/container2.png");
     unsigned int specularMap =   loadTexture("../res/container2_specular.png");
@@ -194,7 +198,7 @@ int main()
 
         //render
         glClearColor(0.1f,0.1f,0.1f,1.0f);
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom),(float)(SCR_WIDTH)/(float)SCR_HEIGHT,0.1f,100.0f);
         glm::mat4 view = camera.GetViewMatrix();
@@ -282,31 +286,33 @@ int main()
         // }
 
         
-         lightShader.use();
-         view = camera.GetViewMatrix();
+        //  lightShader.use();
+        //  view = camera.GetViewMatrix();
         
-         lightShader.SetMat4("projection",projection);
-         lightShader.SetMat4("view",view);
+        //  lightShader.SetMat4("projection",projection);
+        //  lightShader.SetMat4("view",view);
 
-         glBindVertexArray(lightCubeVAO);
-        //  for(int i = 0;i<4;i++){
+        //  glBindVertexArray(lightCubeVAO);
+        // //  for(int i = 0;i<4;i++){
             glm::mat4 model = glm::mat4(1.0f);
          
-            model = glm::translate(model,pointLightPositions[0]);
-            model = glm::scale(model,glm::vec3(0.2));
-            lightShader.SetMat4("model",model);
-            glDrawArrays(GL_TRIANGLES,0,36);
-        //  }
+        //     model = glm::translate(model,pointLightPositions[0]);
+        //     model = glm::scale(model,glm::vec3(0.2));
+        //     lightShader.SetMat4("model",model);
+        //     glDrawArrays(GL_TRIANGLES,0,36);
+        // //  }
 
+        glStencilFunc(GL_ALWAYS,1,0xff);
+        glStencilMask(0xFF);
         
         modelShader.use();
         modelShader.SetMat4("projection",projection);
         modelShader.SetMat4("view",view);
 
-        // glm::mat4 
+        // // glm::mat4 
         model = glm::mat4(1.0f);
         model = glm::translate(model,glm::vec3(0.0f,0.0f,0.0f));
-        model = glm::scale(model,glm::vec3(0.1));
+        // model = glm::scale(model,glm::vec3(0.1));
         modelShader.SetMat4("model",model);
         modelShader.SetVec3("light.position",pointLightPositions[0]);
         modelShader.SetFloat("light.constant",1.0f);
@@ -315,13 +321,28 @@ int main()
 
         ourModel.Draw(modelShader);
 
-        glfwPollEvents();
+        glStencilFunc(GL_NOTEQUAL,1,0xff);
+        glStencilMask(0x00);
+        glDisable(GL_DEPTH_TEST);
+
+        singleColorShader.use();
+        singleColorShader.SetMat4("projection",projection);
+        singleColorShader.SetMat4("view",view);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model,glm::vec3(0.0f,0.0f,0.0f));
+        model = glm::scale(model,glm::vec3(1.2));
+
+        singleColorShader.SetMat4("model",model);
+
+        glStencilMask(0xFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
+
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
     
-
-
-
     std::cout << "Hello World!\n";
 }
 
