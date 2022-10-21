@@ -1,13 +1,17 @@
 #include "MyShader.h"
-MyShader::MyShader(const GLchar* vertexPath, const GLchar* fragmentPath) :ID(0) {
+MyShader::MyShader(const GLchar* vertexPath, const GLchar* fragmentPath,const GLchar* geometryPath) :ID(0) {
 	std::string vertexCode;
 	std::string fragmentCode;
+	std::string geometryCode;
 
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
+	std::ifstream geometryFile;
+
 
 	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	geometryFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
 	try {
 		vShaderFile.open(vertexPath);
@@ -22,6 +26,12 @@ MyShader::MyShader(const GLchar* vertexPath, const GLchar* fragmentPath) :ID(0) 
 
 		vertexCode = vertexStream.str();
 		fragmentCode = fragmentStream.str();
+		if(geometryPath != nullptr){
+			geometryFile.open(geometryPath);
+			std::stringstream geometryStream;
+			geometryStream<<geometryFile.rdbuf();
+			geometryFile.close();
+		}
 	}
 	catch (std::ifstream::failure e) {
 		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
@@ -32,10 +42,17 @@ MyShader::MyShader(const GLchar* vertexPath, const GLchar* fragmentPath) :ID(0) 
 
 	unsigned vertexShader = this->CreateShader(vertexSource, GL_VERTEX_SHADER);
 	unsigned fragmentShader = this->CreateShader(fragmentSource, GL_FRAGMENT_SHADER);
+	unsigned geometryShader = 0;
+
 
 	ID = glCreateProgram();
 	glAttachShader(ID, vertexShader);
 	glAttachShader(ID, fragmentShader);
+	if (geometryPath != nullptr) {
+		const char* geometrySource = geometryCode.c_str();
+		geometryShader = this->CreateShader(geometryPath, GL_GEOMETRY_SHADER);
+		glAttachShader(ID, geometryShader);
+	}
 	glLinkProgram(ID);
 
 	int success = 0;
@@ -48,6 +65,9 @@ MyShader::MyShader(const GLchar* vertexPath, const GLchar* fragmentPath) :ID(0) 
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	if (geometryPath != nullptr) {
+		glDeleteShader(geometryShader);
+	}
 }
 
 unsigned int MyShader::CreateShader(const char* shaderSource, GLenum shaderType) {
